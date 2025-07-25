@@ -1,0 +1,14 @@
+# Ignorar pastas do Visual Studio
+.vs/
+*.user
+
+# Ignorar binários e objetos
+bin/
+obj/
+
+# Ignorar arquivos do sistema
+*.dbmdl
+*.jfm
+
+# Ignorar pacotes e dependências
+node_modules/
