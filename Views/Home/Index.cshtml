@@ -1,0 +1,160 @@
+﻿@model WebProjeto.Models.Dashboard
+@using Newtonsoft.Json
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .dashboard-title {
+            font-weight: 800;
+            color: #333;
+            margin: 30px 0 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: #fff;
+            padding: 15px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-clients {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+
+        .icon-products {
+            background: linear-gradient(135deg, #28a745, #218838);
+        }
+
+        .card-content h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .card-content p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 5px 0 0;
+            color: #222;
+        }
+
+        #chart-container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, #chart-container {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <h2 class="dashboard-title text-center">📊 Dashboard</h2>
+
+        <div class="row g-4 justify-content-center mb-5">
+            <div class="col-12 col-md-5 col-lg-3">
+                <div class="card p-4 text-center">
+                    <div class="card-icon icon-clients mx-auto"><i class="fas fa-users"></i></div>
+                    <div class="card-content mt-3">
+                        <h4>Total de Clientes</h4>
+                        <p>@Model.TotalClientes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-3">
+                <div class="card p-4 text-center">
+                    <div class="card-icon icon-products mx-auto"><i class="fas fa-boxes-stacked"></i></div>
+                    <div class="card-content mt-3">
+                        <h4>Total de Produtos</h4>
+                        <p>@Model.TotalProdutos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div id="chart-container">
+                    <canvas id="estoqueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('estoqueChart').getContext('2d');
+        const dataLabels = @Html.Raw(JsonConvert.SerializeObject(Model.Produtos.Select(p => p.Descricao)));
+        const dataQuantidades = @Html.Raw(JsonConvert.SerializeObject(Model.Produtos.Select(p => p.Quantidade)));
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dataLabels,
+                datasets: [{
+                    label: 'Quantidade em Estoque',
+                    data: dataQuantidades,
+                    backgroundColor: [
+                        '#17a2b8', '#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14'
+                    ],
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@model WebProjeto.Models.Cliente
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-danger">⚠️ Excluir Cliente</h2>
+
+    <div class="card shadow-sm rounded p-4 border-0" style="background: #fdfdfd;">
+        <div class="mb-3">
+            <h4 class="text-danger fw-bold">Tem certeza que deseja excluir este cliente?</h4>
+            <p class="text-muted">Essa ação é irreversível.</p>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <div class="p-3 rounded" style="background: #fff5f5; border-left: 4px solid #dc3545;">
+                    <h5 class="fw-bold mb-1">@Model.Nome</h5>
+                    <p class="mb-1"><i class="fas fa-envelope me-2 text-secondary"></i> @Model.Email</p>
+                    <p class="mb-1"><i class="fas fa-id-card me-2 text-secondary"></i> @Model.CPF</p>
+                    <p class="mb-1"><i class="fas fa-phone me-2 text-secondary"></i> @Model.Telefone</p>
+                    <p class="mb-0"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> @Model.Endereco</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="text-center w-100">
+                    <p class="mb-2 text-muted">📋 Detalhes rápidos</p>
+                    <ul class="list-group mb-3 shadow-sm rounded">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Nome</span><strong>@Model.Nome</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>CPF</span><strong>@Model.CPF</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Telefone</span><strong>@Model.Telefone</strong>
+                        </li>
+                    </ul>
+                    <small class="text-muted">Se for o cliente correto, confirme a exclusão abaixo.</small>
+                </div>
+            </div>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post" class="d-flex justify-content-end gap-2">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <a asp-action="Index" class="btn text-white"
+               style="background: linear-gradient(90deg, #ffc107, #e0a800); border: none;">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+            <button type="submit" class="btn text-white"
+                    style="background: linear-gradient(90deg, #dc3545, #b02a37); border: none;">
+                <i class="fas fa-trash-alt"></i> Excluir Cliente
+            </button>
+        </form>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />

@@ -1,0 +1,182 @@
+﻿@model WebProjeto.Models.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .register-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-width: 900px;
+        width: 90%;
+        display: flex;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease forwards;
+    }
+
+    .register-form {
+        padding: 40px;
+        flex: 1;
+    }
+
+        .register-form h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .register-form label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .register-form input.form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+            .register-form input.form-control:focus {
+                border-color: #6f42c1;
+                box-shadow: 0 0 8px rgba(111, 66, 193, 0.5);
+            }
+
+    .btn-success {
+        background: linear-gradient(90deg, #28a745, #218838);
+        border: none;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        transition: background 0.3s ease;
+    }
+
+        .btn-success:hover {
+            background: linear-gradient(90deg, #218838, #1e7e34);
+        }
+
+    .btn-outline-primary {
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 12px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #6f42c1;
+            color: white;
+            border-color: #6f42c1;
+        }
+
+    .register-form .text-center p {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .register-form .text-center a {
+        color: #6f42c1;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .register-form .text-center a:hover {
+            text-decoration: underline;
+        }
+
+    .illustration {
+        flex: 1;
+        background: url('https://cdn-icons-png.flaticon.com/512/5087/5087579.png') no-repeat center;
+        background-size: contain;
+        animation: float 3s ease-in-out infinite;
+        display: none; /* Hide on small screens */
+    }
+
+    @@media(min-width: 768px) {
+        .illustration {
+            display: block;
+        }
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+</style>
+
+<div class="register-container">
+    <div class="register-form">
+        <h2><i class="fas fa-pen"></i> Registrar</h2>
+
+        <form asp-action="Register" method="post" novalidate>
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Digite sua senha" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirme sua senha" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Registrar</button>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary w-100 mt-3 fw-semibold">
+                <i class="fas fa-arrow-left me-2"></i> Voltar para Login
+            </a>
+        </form>
+    </div>
+
+    <div class="illustration" aria-hidden="true"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

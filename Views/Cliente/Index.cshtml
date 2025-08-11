@@ -1,0 +1,96 @@
+﻿@model IEnumerable<WebProjeto.Models.Cliente>
+
+@{
+    var termoBuscado = ViewBag.Termo as string;
+    var resultadosVazios = Model != null && !Model.Any();
+}
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-success">👥 Lista de Clientes</h2>
+
+    <div class="d-flex justify-content-between flex-wrap mb-3 gap-2">
+        <a asp-action="Create" class="btn text-white"
+           style="background: linear-gradient(90deg, #28a745, #218838); border: none;">
+            <i class="fas fa-user-plus"></i> Adicionar Cliente
+        </a>
+
+        <form asp-action="Buscar" method="get" class="d-flex gap-2">
+            <input type="text" name="termo" value="@termoBuscado"
+                   class="form-control" placeholder="Buscar por nome ou CPF" />
+
+            @if (resultadosVazios)
+            {
+                <a asp-action="Index" class="btn text-white"
+                   style="background: linear-gradient(90deg, #ffc107, #e0a800); border: none;">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+            }
+            else
+            {
+                <button type="submit" class="btn text-white"
+                        style="background: linear-gradient(90deg, #17a2b8, #138496); border: none;">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            }
+        </form>
+    </div>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle">
+            <thead style="background: linear-gradient(90deg, #17a2b8, #28a745); color: white;">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Nascimento</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>CEP</th>
+                    <th>Cidade</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Nome</td>
+                            <td>@item.Email</td>
+                            <td>@(item.Nascimento.HasValue ? item.Nascimento.Value.ToString("dd/MM/yyyy") : "")</td>
+                            <td>@item.CPF</td>
+                            <td>@item.Telefone</td>
+                            <td>@item.Endereco</td>
+                            <td>@item.Cep</td>
+                            <td>@item.Cidade</td>
+                            <td class="text-center">
+                                <a asp-action="Edit" asp-route-id="@item.Id"
+                                   class="btn btn-sm text-white"
+                                   style="background: linear-gradient(90deg, #007bff, #0056b3); border: none;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id"
+                                   class="btn btn-sm text-white"
+                                   style="background: linear-gradient(90deg, #dc3545, #a71d2a); border: none;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                                
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9" class="text-muted fst-italic text-center py-3">
+                            Nenhum cliente encontrado.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />

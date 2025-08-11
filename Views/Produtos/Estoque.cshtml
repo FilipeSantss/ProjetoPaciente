@@ -1,0 +1,60 @@
+﻿@model List<WebProjeto.Models.Produtos>
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-success">📦 Estoque de Produtos</h2>
+
+    <div class="card shadow-sm border-0 rounded p-3">
+        <div class="table-responsive">
+            <table class="table align-middle table-hover">
+                <thead style="background: linear-gradient(90deg, #17a2b8, #28a745); color: white;">
+                    <tr class="text-center">
+                        <th>📄 Descrição</th>
+                        <th>🏷️ Código</th>
+                        <th>📊 Quantidade</th>
+                        <th>⚙️ Atualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Descricao</td>
+                            <td>@item.Codigo</td>
+                            <td class="fw-bold text-center">@item.Quantidade</td>
+                            <td>
+                                <form asp-controller="MovimentacaoEstoque"
+                                      asp-action="AtualizarEstoque"
+                                      method="post"
+                                      class="row g-2 justify-content-center align-items-center">
+
+                                    <input type="hidden" name="id" value="@item.Id" />
+
+                                    <div class="col-md-3 col-6">
+                                        <input type="number" name="quantidade" class="form-control form-control-sm" min="1" placeholder="Qtd" required />
+                                    </div>
+
+                                    <div class="col-md-4 col-6">
+                                        <select name="tipo" class="form-select form-select-sm" required>
+                                            <option value="">Tipo</option>
+                                            <option value="Entrada">⬆️ Entrada</option>
+                                            <option value="Saída">⬇️ Saída</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 col-12 text-center">
+                                        <button type="submit" class="btn btn-sm text-white"
+                                                style="background: linear-gradient(90deg, #28a745, #218838); border: none;">
+                                            <i class="fas fa-sync-alt"></i> Atualizar
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />

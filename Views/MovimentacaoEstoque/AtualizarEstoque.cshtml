@@ -1,0 +1,40 @@
+﻿@model WebProjeto.Models.Produtos
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4">🔄 Atualizar Estoque - @Model.Descricao</h2>
+
+    <div class="card shadow-sm rounded p-4 mx-auto" style="max-width: 480px;">
+        <form asp-action="AtualizarEstoque" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <div class="mb-3">
+                <label for="quantidade" class="form-label fw-bold">
+                    <i class="fas fa-sort-numeric-up"></i> Quantidade
+                </label>
+                <input type="number" id="quantidade" name="quantidade" class="form-control" min="1" required placeholder="Digite a quantidade" />
+            </div>
+
+            <div class="mb-4">
+                <label for="tipo" class="form-label fw-bold">
+                    <i class="fas fa-exchange-alt"></i> Tipo
+                </label>
+                <select id="tipo" name="tipo" class="form-select" required>
+                    <option value="">-- Selecione --</option>
+                    <option value="Entrada">⬆️ Entrada</option>
+                    <option value="Saída">⬇️ Saída</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a asp-controller="Produtos" asp-action="Estoque" class="btn btn-secondary me-2">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Atualizar Estoque
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />

@@ -1,0 +1,115 @@
+﻿@model WebProjeto.Models.Cliente
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-success">📝 Novo Cliente</h2>
+
+    <div class="card shadow-sm rounded p-4 border-0" style="background: #fdfdfd;">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Nome" class="form-label fw-bold">
+                        <i class="fas fa-user"></i> Nome
+                    </label>
+                    <input asp-for="Nome" class="form-control" placeholder="Digite o nome completo" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label fw-bold">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="exemplo@email.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Nascimento" class="form-label fw-bold">
+                        <i class="fas fa-calendar-alt"></i> Nascimento
+                    </label>
+                    <input asp-for="Nascimento" type="date" class="form-control" />
+                    <span asp-validation-for="Nascimento" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="CPF" class="form-label fw-bold">
+                        <i class="fas fa-id-card"></i> CPF
+                    </label>
+                    <input asp-for="CPF" class="form-control" placeholder="000.000.000-00" />
+                    <span asp-validation-for="CPF" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Telefone" class="form-label fw-bold">
+                        <i class="fas fa-phone"></i> Telefone
+                    </label>
+                    <input asp-for="Telefone" class="form-control" placeholder="(00) 00000-0000" />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="Endereco" class="form-label fw-bold">
+                        <i class="fas fa-map-marker-alt"></i> Endereço
+                    </label>
+                    <input asp-for="Endereco" class="form-control" placeholder="Rua, número, bairro" />
+                    <span asp-validation-for="Endereco" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Cep" class="form-label fw-bold">
+                        <i class="fas fa-mail-bulk"></i> CEP
+                    </label>
+                    <input asp-for="Cep" class="form-control" id="Cep" placeholder="00000-000" />
+                    <span asp-validation-for="Cep" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Cidade" class="form-label fw-bold">
+                        <i class="fas fa-city"></i> Cidade
+                    </label>
+                    <input asp-for="Cidade" class="form-control" id="Cidade" readonly />
+                    <span asp-validation-for="Cidade" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+                <a asp-action="Index" class="btn text-white me-2"
+                   style="background: linear-gradient(90deg, #ffc107, #e0a800); border: none;">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+                <button type="submit" class="btn text-white"
+                        style="background: linear-gradient(90deg, #28a745, #218838); border: none;">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+            </div>
+        </form>
+       
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+<script>
+    document.getElementById('Cep').addEventListener('blur', function () {
+        var cep = this.value.replace(/\D/g, '');
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        document.getElementById('Cidade').value = data.localidade;
+                    } else {
+                        alert('CEP não encontrado');
+                        document.getElementById('Cidade').value = '';
+                    }
+                });
+        }
+    });
+</script>

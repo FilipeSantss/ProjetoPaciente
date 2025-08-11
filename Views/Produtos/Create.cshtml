@@ -1,0 +1,38 @@
+﻿@model WebProjeto.Models.Produtos
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-success">➕ Novo Produto</h2>
+
+    <div class="card shadow-sm border-0 rounded p-4">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="Descricao" class="form-label fw-semibold">📄 Descrição</label>
+                <input asp-for="Descricao" class="form-control" placeholder="Digite a descrição do produto" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Codigo" class="form-label fw-semibold">🏷️ Código</label>
+                <input asp-for="Codigo" class="form-control" placeholder="Digite o código do produto" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn text-white"
+                        style="background: linear-gradient(90deg, #28a745, #218838); border: none;">
+                    💾 Salvar
+                </button>
+                <a asp-action="Index" class="btn text-white"
+                   style="background: linear-gradient(90deg, #6c757d, #495057); border: none;">
+                    ❌ Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

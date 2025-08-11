@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebProjeto.Models.Produtos>
+
+<div class="container my-4">
+    <h2 class="fw-bold text-center mb-4 text-success">
+        📋 Listagem de Produtos
+    </h2>
+
+    <div class="card shadow-sm border-0 rounded p-3">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead style="background: linear-gradient(90deg, #17a2b8, #28a745); color: white;">
+                    <tr class="text-center">
+                        <th>📄 Descrição</th>
+                        <th>🏷️ Código</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var d in Model)
+                    {
+                        <tr>
+                            <td>@d.Descricao</td>
+                            <td>@d.Codigo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+        <a asp-controller="Produtos" asp-action="Estoque" class="btn text-white"
+           style="background: linear-gradient(90deg, #17a2b8, #138496); border: none;">
+            📦 Ir para Estoque
+        </a>
+        <a asp-action="Create" asp-route-clienteId="@ViewBag.Id" class="btn text-white"
+           style="background: linear-gradient(90deg, #28a745, #218838); border: none;">
+            ➕ Novo Produto
+        </a>
+    </div>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />

@@ -1,0 +1,35 @@
+# Compilação
+bin/
+obj/
+
+# Logs
+*.log
+logs/
+
+# Configurações sensíveis
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Banco local
+*.db
+*.mdf
+*.ldf
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Dependências do Node (se tiver front integrado)
+node_modules/

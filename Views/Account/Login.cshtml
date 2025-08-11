@@ -1,0 +1,171 @@
+﻿@model WebProjeto.Models.Account.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-width: 900px;
+        width: 90%;
+        display: flex;
+        overflow: hidden;
+        animation: fadeIn 0.8s ease forwards;
+    }
+
+    .login-form {
+        padding: 40px;
+        flex: 1;
+    }
+
+    .login-form h2 {
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #333;
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    .login-form label {
+        font-weight: 600;
+        color: #555;
+    }
+
+    .login-form input.form-control {
+        border-radius: 10px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .login-form input.form-control:focus {
+        border-color: #6f42c1;
+        box-shadow: 0 0 8px rgba(111, 66, 193, 0.5);
+    }
+
+    .form-check-label {
+        color: #555;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #6f42c1, #9b59b6);
+        border: none;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(90deg, #9b59b6, #6f42c1);
+    }
+
+    .login-form .text-center p {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .login-form .text-center a {
+        color: #6f42c1;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-form .text-center a:hover {
+        text-decoration: underline;
+    }
+
+    .illustration {
+        flex: 1;
+        background: url('https://cdn-icons-png.flaticon.com/512/5087/5087579.png') no-repeat center;
+        background-size: contain;
+        animation: float 3s ease-in-out infinite;
+        display: none; /* Mobile hide */
+    }
+
+    @@media(min-width: 768px) {
+        .illustration {
+            display: block;
+        }
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-form">
+        <h2><i class="fas fa-lock"></i> Login</h2>
+
+        <form asp-action="Login" method="post" novalidate>
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Digite sua senha" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="RememberMe" class="form-check-input" id="rememberMe" />
+                <label asp-for="RememberMe" class="form-check-label" for="rememberMe">Lembrar-me</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+            <div class="text-center mt-3">
+                <p>Não tem uma conta? <a asp-action="Register" asp-controller="Account">Crie aqui</a></p>
+            </div>
+        </form>
+    </div>
+
+    <div class="illustration" aria-hidden="true"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
